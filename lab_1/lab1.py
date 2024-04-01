@@ -32,12 +32,33 @@ def encryption_decryption_of_text(encryption_key_file, input_file, output_file, 
         print(f"Error encrypting of decrypting text: {exc}")
 
 
+def char_frequency(original_cod9_file):
+    try:
+        with open(original_cod9_file, "r", encoding="utf-8") as file:
+            original = file.read().upper()
+        count = len(original)
+        for i in ARR_LETTERS:
+            if i in original:
+                count_symbol = original.count(i)
+                print(f"{i}({count_symbol}) : {count_symbol / count}")
+    except Exception as exc:
+        print(f"Error checking letter frequency in text: {exc}")
+
+
+
+
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Substitution encryption/decryption")
     parser.add_argument("--kf", default="key.json", help="Path to the encryption key file")
     parser.add_argument("--i", default="text.txt", help="Path to the input file")
     parser.add_argument("--o", default= "encrypted.txt", help="Path to the output file")
+    parser.add_argument("--cod9", default="cod9.txt", help = "Path to the cod(var).txt file")
+    parser.add_argument("--r", default="replacements.json", help="Path to the replacements file")
     parser.add_argument("--m", default="encryption", choices=['encryption', 'decryption'], help="Mode of operation: encryption or decryption")
     args = parser.parse_args()
 
     encryption_decryption_of_text(args.kf, args.i, args.o, args.m)
+    char_frequency(args.cod9)
+
