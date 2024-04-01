@@ -6,7 +6,7 @@ ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ"
 ARR_LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-/;<=>?@[\]^_`"
 
 
-def encryption_decryption_of_text(encryption_key_file, input_file, mode):
+def encryption_decryption_of_text(encryption_key_file, input_file, output_file, mode):
     try:
         with open(encryption_key_file, "r") as f:
             templates = json.load(f)
@@ -26,8 +26,18 @@ def encryption_decryption_of_text(encryption_key_file, input_file, mode):
                 output += ALPHABET[new_place]
             else:
                 output += i
-        print(output)
+        with open(output_file, 'x') as out:
+            out.write(output)
     except Exception as exc:
         print(f"Error encrypting of decrypting text: {exc}")
 
-encryption_decryption_of_text("C:/Users/ROfl/Desktop/oib-lab1/isb/lab_1/key.json", "C:/Users/ROfl/Desktop/oib-lab1/isb/lab_1/encrypted.txt", 'decryption')
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Substitution encryption/decryption")
+    parser.add_argument("--kf", default="key.json", help="Path to the encryption key file")
+    parser.add_argument("--i", default="text.txt", help="Path to the input file")
+    parser.add_argument("--o", default= "encrypted.txt", help="Path to the output file")
+    parser.add_argument("--m", default="encryption", choices=['encryption', 'decryption'], help="Mode of operation: encryption or decryption")
+    args = parser.parse_args()
+
+    encryption_decryption_of_text(args.kf, args.i, args.o, args.m)
