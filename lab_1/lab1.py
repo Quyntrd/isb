@@ -3,10 +3,20 @@ import argparse
 
 
 ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ"
-ARR_LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-/;<=>?@[\]^_`"
+LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-/;<=>?@[\]^_`"
 
 
-def encryption_decryption_of_text(encryption_key_file, input_file, output_file, mode):
+def encryption_decryption_of_text(encryption_key_file: str, input_file: str, output_file: str, mode: str) -> None:
+    """This function encrypting or decryptin text from input file into output file
+                
+    Parametres:
+        encryption_key_file(str): path for json file with step in it
+
+        input_file(str): path of the input file with text
+
+        output_file(str): name of the output file for encrypted or decrypted text
+
+        mode(str): mode for encrypting/decrypting"""
     try:
         with open(encryption_key_file, "r") as f:
             templates = json.load(f)
@@ -32,15 +42,19 @@ def encryption_decryption_of_text(encryption_key_file, input_file, output_file, 
         print(f"Error encrypting of decrypting text: {exc}")
 
 
-def char_frequency(original_cod9_file):
+def char_frequency(input_file: str) -> None:
+    """This function checks the frequency of the characters in the text
+                
+    Parametres:
+        input_file(str): path of the input file with text"""
     try:
-        with open(original_cod9_file, "r", encoding="utf-8") as file:
+        with open(input_file, "r", encoding="utf-8") as file:
             original = file.read().upper()
         count = len(original)
-        for i in ARR_LETTERS:
-            if i in original:
-                count_symbol = original.count(i)
-                print(f"{i}({count_symbol}) : {count_symbol / count}")
+        for char in LETTERS:
+            if char in original:
+                count_symbol = original.count(char)
+                print(f"{char}({count_symbol}) : {count_symbol / count}")
     except Exception as exc:
         print(f"Error checking letter frequency in text: {exc}")
 
