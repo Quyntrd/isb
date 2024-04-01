@@ -97,4 +97,3 @@ if __name__ == "__main__":
     encryption_decryption_of_text(args.kf, args.i, args.out, args.m)
     char_frequency(args.c9)
     frequency_decryption(args.c9, args.r, args.out1)
-
