@@ -32,7 +32,7 @@ def read_and_up_file(input_file: str) -> str:
 
 
 def write_file(output_file: str, output: str) -> None:
-    """This function creates new file and writes data into it
+    """This function writes data into text file
     
     Parametres:
         output_file(str): path and name of the output file
