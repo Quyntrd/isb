@@ -49,11 +49,11 @@ def char_frequency(input_file: str) -> None:
         input_file(str): path of the input file with text"""
     try:
         with open(input_file, "r", encoding="utf-8") as file:
-            original = file.read().upper()
-        count = len(original)
+            text = file.read().upper()
+        count = len(text)
         for char in LETTERS:
-            if char in original:
-                count_symbol = original.count(char)
+            if char in text:
+                count_symbol = text.count(char)
                 print(f"{char}({count_symbol}) : {count_symbol / count}")
     except Exception as exc:
         print(f"Error checking letter frequency in text: {exc}")
