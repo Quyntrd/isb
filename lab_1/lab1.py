@@ -31,14 +31,14 @@ def read_and_up_file(input_file: str) -> str:
         return f.read().upper()
 
 
-def create_and_write_file(output_file: str, output: str) -> None:
+def write_file(output_file: str, output: str) -> None:
     """This function creates new file and writes data into it
     
     Parametres:
         output_file(str): path and name of the output file
         
         output(str): text that needed to be written"""
-    with open(output_file, "x", encoding="utf-8") as o:
+    with open(output_file, "w", encoding="utf-8") as o:
         o.write(output)
 
 
@@ -62,15 +62,16 @@ def encryption_decryption_of_text(encryption_key_file: str, input_file: str, out
         for i in data:
             place = ALPHABET.find(i)    
             new_place = 0
-            if m == Mode.ENCRYPTION:
-                new_place = place + step
-            elif m == Mode.DECRYPTION:
-                new_place = place - step
+            match m:
+                case Mode.ENCRYPTION:
+                    new_place = place + step
+                case Mode.DECRYPTION:
+                    new_place = place - step
             if i in ALPHABET:
                 output += ALPHABET[new_place]
             else:
                 output += i
-        create_and_write_file(output_file, output)
+        write_file(output_file, output)
     except Exception as exc:
         print(f"Error encrypting of decrypting text: {exc}")
 
@@ -107,7 +108,7 @@ def frequency_decryption(input_file: str, replacements: str, output_file: str):
         for char in encoded_text:
             decoded_char = replacement.get(char, char)
             output += decoded_char
-        create_and_write_file(output_file, output)
+        write_file(output_file, output)
     except Exception as exc:
         print(f"Error in decrypting text using frequency analysis method: {exc}")
 
