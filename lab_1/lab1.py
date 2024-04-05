@@ -1,9 +1,44 @@
 import json
 import argparse
 
+from enum import Enum
+
 
 ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZ"
 LETTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-/;<=>?@[\]^_`"
+
+class Mode(Enum):
+    ENCRYPTION = 'encryption'
+    DECRYPTION = 'decryption'
+
+
+def read_json_file(input_file: str):
+    """This function reads file and returns json.load
+    
+    Parametres:
+        input_file(str): path of the input file"""
+    with open(input_file, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def read_and_up_file(input_file: str):
+    """This function reads and uppers characters in text
+    
+    Paramentres:
+        input_file(str): path of the input file"""
+    with open(input_file, "r", encoding="utf-8") as f:
+        return f.read().upper()
+
+
+def create_and_write_file(output_file: str, output: str) -> None:
+    """This function creates new file and writes data into it
+    
+    Parametres:
+        output_file(str): path and name of the output file
+        
+        output(str): text that needed to be written"""
+    with open(output_file, "x", encoding="utf-8") as o:
+        o.write(output)
 
 
 def encryption_decryption_of_text(encryption_key_file: str, input_file: str, output_file: str, mode: str) -> None:
@@ -18,26 +53,23 @@ def encryption_decryption_of_text(encryption_key_file: str, input_file: str, out
 
         mode(str): mode for encrypting/decrypting"""
     try:
-        with open(encryption_key_file, "r") as f:
-            templates = json.load(f)
+        templates = read_json_file(encryption_key_file)
         step = templates["step"]
-        with open(input_file, "r", encoding="utf-8") as file:
-            data = file.read().upper()
+        data = read_and_up_file(input_file)
         output = ""
+        m = Mode.ENCRYPTION if mode == 'encryption' else Mode.DECRYPTION
         for i in data:
             place = ALPHABET.find(i)    
             new_place = 0
-            match mode:
-                case 'encryption':
-                    new_place = place + step
-                case 'decryption':
-                    new_place = place - step
+            if m == Mode.ENCRYPTION:
+                new_place = place + step
+            elif m == Mode.DECRYPTION:
+                new_place = place - step
             if i in ALPHABET:
                 output += ALPHABET[new_place]
             else:
                 output += i
-        with open(output_file, 'x', encoding="utf-8") as out:
-            out.write(output)
+        create_and_write_file(output_file, output)
     except Exception as exc:
         print(f"Error encrypting of decrypting text: {exc}")
 
@@ -48,8 +80,7 @@ def char_frequency(input_file: str) -> None:
     Parametres:
         input_file(str): path of the input file with text"""
     try:
-        with open(input_file, "r", encoding="utf-8") as file:
-            text = file.read().upper()
+        text = read_and_up_file(input_file)
         count = len(text)
         for char in LETTERS:
             if char in text:
@@ -69,16 +100,13 @@ def frequency_decryption(input_file: str, replacements: str, output_file: str):
         
         output_file(str): name of the txt output file for encrypted or decrypted text"""
     try:
-        with open(replacements, "r", encoding="utf-8") as json_file:
-            replacements = json.load(json_file)
-        with open(input_file, "r", encoding="utf-8") as file:
-            encoded_text = file.read().upper()
+        replacement = read_json_file(replacements)
+        encoded_text = read_and_up_file(input_file)
         output = ""
         for char in encoded_text:
-            decoded_char = replacements.get(char, char)
+            decoded_char = replacement.get(char, char)
             output += decoded_char
-        with open(output_file, 'x', encoding="utf-8") as out:
-            out.write(output)
+        create_and_write_file(output_file, output)
     except Exception as exc:
         print(f"Error in decrypting text using frequency analysis method: {exc}")
 
