@@ -21,7 +21,7 @@ def read_json_file(input_file: str):
         return json.load(f)
 
 
-def read_and_up_file(input_file: str):
+def read_and_up_file(input_file: str) -> str:
     """This function reads and uppers characters in text
     
     Paramentres:
