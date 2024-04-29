@@ -1,11 +1,20 @@
 import math
+
 import mpmath
 from scipy.special import gammainc
+
 import file_readers
 
 
 def frequency_bit_test(sequence: str) -> float:
     """
+    This function gets possibility for the frequency bit test
+    
+    Parametres:
+        sequence (str): sequence of bytes
+    
+    Returns:
+        float: P value
     """
     N = len(sequence)
     sum_bits = sum(1 if i == '1' else -1 for i in sequence)
@@ -16,6 +25,13 @@ def frequency_bit_test(sequence: str) -> float:
 
 def identical_bit_test(sequence: str) -> float:
     """
+    This function gets possibility for the identical bits in a sequence
+
+    Parametres:
+        sequence (str): sequence of bytes
+
+    Returns:
+        float: P value
     """
     N = len(sequence)
     sum_bits = sum(int(i) for i in sequence)
@@ -27,6 +43,14 @@ def identical_bit_test(sequence: str) -> float:
 
 def longest_subsequence(sequence: str, consts_PI: list) -> float:
     """
+    This function gets possibility for the longest sequence of ones in a block
+
+    Parametres:
+        sequence (str): sequence of bytes
+        consts_PI (list): list of constants for the tests
+    
+    Returns:
+        float: P value
     """
     block_length = 8
     v = {1: 0, 2: 0, 3:0, 4: 0}
@@ -57,6 +81,12 @@ def longest_subsequence(sequence: str, consts_PI: list) -> float:
 
 def run_test_and_write(sequence: str, output_file: str, consts_PI: list):
     """
+    This function runs the tests and writes the results into the output file
+
+    Parametres:
+        sequence(str): sequence of bytes
+        output_file(str): output file name
+        consts_PI(list): constants for the test
     """
     freq_result = frequency_bit_test(sequence)
     ident_result = identical_bit_test(sequence)
