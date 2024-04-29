@@ -13,7 +13,7 @@ def read_json_file(input_file: str):
         print(f"Failed to read json file: {exc}")
     
 
-def write_file(output_file: str, output: str) -> None:
+def write_file(output_file: str, output: dict) -> None:
     """This function writes data into text file
     
     Parametres:
