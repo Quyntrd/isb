@@ -74,5 +74,12 @@ def run_test_and_write(input_file: str, output_file: str, consts_PI: list):
 
 
 if __name__ == "__main__":
-    settings = file_readers.read_json_file("generated.json")
+    settings = file_readers.read_json_file("settings.json")
+    sequences = file_readers.read_json_file("generated.json")
     consts_PI = settings["consts_PI"]
+    input_c = sequences["cpp"]
+    input_java = sequences["java"]
+    output_file_c = settings["c_output"]
+    output_file_java = settings["java_output"]
+    run_test_and_write(input_c, output_file_c, consts_PI)
+    run_test_and_write(input_java, output_file_java, consts_PI)
