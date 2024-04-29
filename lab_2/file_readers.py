@@ -13,7 +13,7 @@ def read_json_file(input_file: str):
         print(f"Failed to read json file: {exc}")
     
 
-def write_file(output_file: str, output: dict) -> None:
+def write_file(output_file: str, output: list) -> None:
     """This function writes data into text file
     
     Parametres:
@@ -22,6 +22,8 @@ def write_file(output_file: str, output: dict) -> None:
         output(str): text that needed to be written"""
     try:
         with open(output_file, "w", encoding="utf-8") as o:
-            o.write(output)
+            for out in output:
+                o.write(out)
+                o.write("\n")
     except Exception as exc:
         print(f"Failed to read txt file: {exc}")

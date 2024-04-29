@@ -1,6 +1,4 @@
 import math
-import json
-import os
 import mpmath
 from scipy.special import gammainc
 import file_readers
@@ -22,8 +20,8 @@ def identical_bit_test(sequence: str) -> float:
     N = len(sequence)
     sum_bits = sum(int(i) for i in sequence)
     sig = sum_bits/N
-    Vn = sum(1 for i in sequence if sequence[i] != sequence[i+1])
-    P = math.erfc(abs(Vn-2*N*sig(1-sig))/(2*math.sqrt(2*N)* sig *(1-sig)))
+    Vn = sum(1 for i in range(len(sequence)-1) if sequence[i] != sequence[i+1])
+    P = math.erfc(abs(Vn-2*N*sig*(1-sig))/(2*math.sqrt(2*N)* sig *(1-sig)))
     return P
 
 
@@ -57,19 +55,14 @@ def longest_subsequence(sequence: str, consts_PI: list) -> float:
     return P
 
 
-def run_test_and_write(input_file: str, output_file: str, consts_PI: list):
+def run_test_and_write(sequence: str, output_file: str, consts_PI: list):
     """
     """
-    sequence = file_readers.read_json_file(input_file)
     freq_result = frequency_bit_test(sequence)
     ident_result = identical_bit_test(sequence)
     longest_result = longest_subsequence(sequence, consts_PI)
 
-    results = {
-        "Frequency Bit Test": freq_result,
-        "Identical Bit Test": ident_result,
-        "Longest Subsequence Test": longest_result
-    }
+    results = [f"Frequency Bit Test: {freq_result}",f"Identical Bit Test: {ident_result}", f"Longest Subsequence Test: {longest_result}"]
     file_readers.write_file(output_file, results)
 
 
