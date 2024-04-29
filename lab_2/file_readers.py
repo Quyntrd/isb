@@ -6,8 +6,11 @@ def read_json_file(input_file: str):
     
     Parametres:
         input_file(str): path of the input file"""
-    with open(input_file, "r", encoding="utf-8") as f:
-        return json.load(f)
+    try:
+        with open(input_file, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception as exc:
+        print(f"Failed to read json file: {exc}")
     
 
 def write_file(output_file: str, output: str) -> None:
@@ -17,5 +20,8 @@ def write_file(output_file: str, output: str) -> None:
         output_file(str): path and name of the output file
         
         output(str): text that needed to be written"""
-    with open(output_file, "w", encoding="utf-8") as o:
-        o.write(output)
+    try:
+        with open(output_file, "w", encoding="utf-8") as o:
+            o.write(output)
+    except Exception as exc:
+        print(f"Failed to read txt file: {exc}")
