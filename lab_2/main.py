@@ -1,8 +1,5 @@
 import math
-
 import mpmath
-from scipy.special import gammainc
-
 import file_readers
 
 
