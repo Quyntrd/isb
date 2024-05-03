@@ -72,7 +72,7 @@ def longest_subsequence(sequence: str, consts_PI: list) -> float:
             case _:
                 v[4] += 1
     for i in range(4):
-        hi_2 += ((v[i+1]-16*consts_PI[i]**2)/(16*consts_PI[i]))
+        hi_2 += ((v[i+1]-16*consts_PI[i])**2/(16*consts_PI[i]))
     P = mpmath.gammainc(3/2, hi_2/2)
     return P
 
