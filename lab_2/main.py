@@ -33,6 +33,7 @@ def identical_bit_test(sequence: str) -> float:
     N = len(sequence)
     sum_bits = sum(int(i) for i in sequence)
     sig = sum_bits/N
+    if abs(sig-0.5)>=2/math.sqrt(2): return 0
     Vn = sum(1 for i in range(len(sequence)-1) if sequence[i] != sequence[i+1])
     P = math.erfc(abs(Vn-2*N*sig*(1-sig))/(2*math.sqrt(2*N)* sig *(1-sig)))
     return P
