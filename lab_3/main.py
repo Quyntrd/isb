@@ -32,17 +32,17 @@ def decrypt_sym_key(sym:Symmetric, asym: Asymmetric, enc_sym_key_path: str, priv
 def encrypt_text(sym:Symmetric, text_path: str, decrypted_key_path: str, path: str) -> None:
     """This function encrypts text using symmetric encryption and saves it to a file"""
     text = read_txt(text_path)
-    sym.deserialize_key(decrypt_sym_key)
-    encrypted_text = sym.decrypt_text(text)
+    sym.deserialize_key(decrypted_key_path)
+    encrypted_text = sym.encrypt_text(text)
     write_file(path, encrypted_text)
 
 
 def decrypt_text(sym: Symmetric, encrypted_text: str, decrypted_key_path: str, path: str) -> None:
     """This function decrypts text using symmetric decryption and save it to a file"""
-    text = read_txt(encrypt_text)
-    sym.deserialize_key(decrypt_sym_key)
+    text = read_txt(encrypted_text)
+    sym.deserialize_key(decrypted_key_path)
     decrypted_text = sym.decrypt_text(text)
-    write_file(path, decrypt_text)
+    write_file(path, decrypted_text)
 
 
 if __name__ == "__main__":

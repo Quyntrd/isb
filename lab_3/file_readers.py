@@ -39,7 +39,7 @@ def write_file(output_file: str, output: str) -> None:
             with open(output_file, "wb") as file:
                 file.write(output)
         else:  
-            with open(output_file, "w") as file:
+            with open(output_file, "w", encoding="utf-8") as file:
                 file.write(output)
     except Exception as exc:
         print(f"Failed to read txt file: {exc}")
