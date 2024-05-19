@@ -37,7 +37,7 @@ class Symmetric:
         Encrypt text using AES symmetric encryption in CBC mode.
         """
         iv = os.urandom(16)
-        cipher = Cipher(algorithms.AES(self.key), modes.CBC(iv))
+        cipher = Cipher(algorithms.IDEA(self.key), modes.CBC(iv))
         encryptor = cipher.encryptor()
         padder = padding.PKCS7(128).padder()
         padded_text = padder.update(text) + padder.finalize()
@@ -49,7 +49,7 @@ class Symmetric:
         """
         iv = text[:16]
         cipher_text = text[16:]
-        cipher = Cipher(algorithms.AES(self.key), modes.CBC(iv))
+        cipher = Cipher(algorithms.IDEA(self.key), modes.CBC(iv))
         decrypt = cipher.decryptor()
         unpacker_text = decrypt.update(cipher_text) + decrypt.finalize()
         decrypt_text = unpacker_text.decode('UTF-8')
