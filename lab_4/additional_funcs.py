@@ -26,12 +26,12 @@ def find_card_data(bins:tuple, hash: str, last_numbers: str, data_path: str) -> 
         with mp.Pool(processes=mp.cpu_count()) as p:
             for result in p.starmap(check_hash, args):
                 if result:
-                    logging.info(f"Number of card: {result[0]}-{result[1]}-{result[2]}")
+                    logging.info(f"Number of card: {result[0]}{result[1]}{result[2]}")
                     p.terminate()
                     try:
                         with open(data_path, "w") as file:
-                            json.dump({"card_number": str(f"{result[0]}-{result[1]}-{result[2]}")}, file)
-                            return str(f"{result[0]}-{result[1]}-{result[2]}")
+                            json.dump({"card_number": str(f"{result[0]}{result[1]}{result[2]}")}, file)
+                            return str(f"{result[0]}{result[1]}{result[2]}")
                     except Exception as exc:
                         logging.error(f"Failed to save data: {exc}")
     except Exception as exc:
@@ -85,3 +85,12 @@ def time_measurement(bins: tuple, hash: str, last_numbers: str) -> None:
         plt.show()
     except Exception as exc:
         logging.error(f"Failed measuring time: {exc}")
+
+
+if __name__ == "__main__":
+    settings = read_settings()
+
+    result = find_card_data(settings["bins"], settings["hash"], settings["last_numbers"], settings["data_path"])
+    luhn_algorithm(result)
+    time_measurement(settings["bins"], settings["hash"], settings["last_numbers"])
+        
