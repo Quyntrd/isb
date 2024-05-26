@@ -85,12 +85,3 @@ def time_measurement(bins: tuple, hash: str, last_numbers: str) -> None:
         plt.show()
     except Exception as exc:
         logging.error(f"Failed measuring time: {exc}")
-
-
-if __name__ == "__main__":
-    settings = read_settings()
-
-    result = find_card_data(settings["bins"], settings["hash"], settings["last_numbers"], settings["data_path"])
-    luhn_algorithm(result)
-    time_measurement(settings["bins"], settings["hash"], settings["last_numbers"])
-        
