@@ -2,12 +2,16 @@ import hashlib
 import logging
 import json
 import time
+import argparse
 import multiprocessing as mp
 import matplotlib.pyplot as plt
 
 from tqdm import tqdm
 
 from file_readers import read_settings
+
+
+logging.basicConfig(level=logging.INFO)
 
 
 def check_hash(x:int, bins: tuple, hash: str, last_numbers: str) -> tuple:
@@ -23,19 +27,21 @@ def find_card_data(bins:tuple, hash: str, last_numbers: str, data_path: str) -> 
     """This function searchs bank data"""
     try:
         args = []
+        card_number = ""
         for i in range(0, 1000000):
             args.append((i, bins, hash, last_numbers))
         with mp.Pool(processes=mp.cpu_count()) as p:
             for result in p.starmap(check_hash, args):
                 if result:
                     logging.info(f"Number of card: {result[0]}{result[1]}{result[2]}")
+                    card_number = f"{result[0]}{result[1]}{result[2]}"
                     p.terminate()
-                    try:
-                        with open(data_path, "w") as file:
-                            json.dump({"card_number": str(f"{result[0]}{result[1]}{result[2]}")}, file)
-                            return str(f"{result[0]}{result[1]}{result[2]}")
-                    except Exception as exc:
-                        logging.error(f"Failed to save data: {exc}")
+        try:
+            with open(data_path, "w") as file:
+                json.dump({"card_number": str(f"{card_number}")}, file)
+                return str(f"{card_number}")
+        except Exception as exc:
+            logging.error(f"Failed to save data: {exc}")
     except Exception as exc:
         logging.error(f"Failed to find the card data: {exc}")
 
@@ -92,9 +98,11 @@ def time_measurement(bins: tuple, hash: str, last_numbers: str) -> None:
 
 
 if __name__ == "__main__":
-    settings = read_settings()
+    parser = argparse.ArgumentParser(description="Settings path")
+    parser.add_argument("--datapath", default="settings.json", help="Path of the settings")
+    parser.add_argument("--cardpath", default="card_number.json", help="Path for card number")
+    args = parser.parse_args()
+    settings = read_settings(args.datapath)
 
-    result = find_card_data(settings["bins"], settings["hash"], settings["last_numbers"], settings["data_path"])
+    result = find_card_data(settings["bins"], settings["hash"], settings["last_numbers"], args.cardpath)
     luhn_algorithm(result)
-    time_measurement(settings["bins"], settings["hash"], settings["last_numbers"])
-        
