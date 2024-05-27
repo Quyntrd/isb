@@ -1,7 +1,6 @@
 import sys
 from PyQt6.QtCore import QSize, Qt
-from PyQt6.QtWidgets import (
-    QApplication,
+from PyQt6.QtWidgets import (QApplication,
     QLabel,
     QLineEdit,
     QMainWindow,
@@ -21,7 +20,9 @@ class MainWindow(QMainWindow):
 
         self.setGeometry(100, 100, 300, 400)
         self.setMaximumSize(700, 500)
+
         self.setWindowTitle("Получение номера карты по хэшу")
+
         widget = QWidget()
         layout = QVBoxLayout()
 
@@ -141,10 +142,10 @@ class MainWindow(QMainWindow):
         Closes the application window with a confirmation request from the user.
         """
         reply = QMessageBox.question(self, 'Закрытие', 'Вы уверены что хотите закрыть окно?',
-                                     QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, QMessageBox.StandardButton.No)
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, QMessageBox.StandardButton.No)
 
         if reply == QMessageBox.StandardButton.Yes:
-                self.close()
+            self.close()
         else:
             pass
 
