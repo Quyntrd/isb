@@ -11,6 +11,7 @@ from file_readers import read_settings
 
 
 def check_hash(x:int, bins: tuple, hash: str, last_numbers: str) -> tuple:
+    """This function verificates hash"""
     x = str(x).zfill(6)
     for bin in bins:
         if hashlib.sha3_256(f"{bin}{x}{last_numbers}".encode()).hexdigest() == hash:
@@ -19,6 +20,7 @@ def check_hash(x:int, bins: tuple, hash: str, last_numbers: str) -> tuple:
 
 
 def find_card_data(bins:tuple, hash: str, last_numbers: str, data_path: str) -> str:
+    """This function searchs bank data"""
     try:
         args = []
         for i in range(0, 1000000):
@@ -39,6 +41,7 @@ def find_card_data(bins:tuple, hash: str, last_numbers: str, data_path: str) -> 
 
 
 def luhn_algorithm(card_numbers: str) -> bool:
+    """This function checks the card number with Luhn algorithm"""
     try:
         result = int(card_numbers[-1])
         list_numbers = [int(i) for i in (card_numbers[::-1])]
@@ -62,6 +65,7 @@ def luhn_algorithm(card_numbers: str) -> bool:
 
 
 def time_measurement(bins: tuple, hash: str, last_numbers: str) -> None:
+    """This function measures time and draws the graph of time and processes"""
     try:
         args = []
         for i in range(0, 1000000):
