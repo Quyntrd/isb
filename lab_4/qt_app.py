@@ -36,7 +36,6 @@ class MainWindow(QMainWindow):
         self.btn_luhn.setEnabled(False)
         self.btn_luhn.clicked.connect(self.luhn_algorithm)
         self.btn_graph = QPushButton("Построить график зависимости времени от процессов")
-        self.btn_graph.setEnabled(False)
         self.btn_graph.clicked.connect(self.graph_draw)
         self.btn_exit = QPushButton("Выйти из программы")
         self.btn_exit.clicked.connect(lambda: self.shutprocess())
@@ -99,7 +98,6 @@ class MainWindow(QMainWindow):
                 self.card_number = result
                 QMessageBox.information(None, "Успешно", f"Номер карты найден и успешно сохранен в {file_path}")
                 self.btn_luhn.setEnabled(True)
-                self.btn_graph.setEnabled(True)
             else:
                 QMessageBox.information(None, "Ошибка", "Номер карты не найден")
 
