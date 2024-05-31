@@ -60,13 +60,13 @@ if __name__ == "__main__":
     symmetric = Symmetric()
     asymmetric = Asymmetric()
     match args:
-        case args.generation:
+        case args if args.generation:
             generate_keys(symmetric, asymmetric, settings["symmetric_key"], settings["public_key"], settings["private_key"])
-        case args.encryption_key:
+        case args if  args.encryption_key:
             encrypt_sym_key(symmetric, asymmetric, settings["symmetric_key"], settings["public_key"], settings["enc_sym_key"])
-        case args.decryption_key:
+        case args if args.decryption_key:
             decrypt_sym_key(symmetric, asymmetric, settings["enc_sym_key"], settings["private_key"], settings["dec_sym_key"])
-        case args.encryption:
+        case args if  args.encryption:
             encrypt_text(symmetric, settings["initial_file"], settings["dec_sym_key"], settings["encrypted_file"])
-        case args.decryption:
+        case args if args.decryption:
             decrypt_text(symmetric, settings["encrypted_file"], settings["dec_sym_key"], settings["decrypted_file"])
